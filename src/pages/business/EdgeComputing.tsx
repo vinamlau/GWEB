@@ -1,10 +1,10 @@
-import { Server, Zap, Shield, Globe, Clock, TrendingUp } from 'lucide-react'
-import Section from '../components/common/Section'
-import Container from '../components/common/Container'
-import FeatureItem from '../components/business/FeatureItem'
-import StatCard from '../components/business/StatCard'
-import Button from '../components/common/Button'
+import { Clock, Globe, Server, Shield, TrendingUp, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
+
+import Button from '../../components/Button'
+import Container from '../../components/Container'
+import Section from '../../components/Section'
+import StatCard from '../../components/StatCard'
 
 const services = [
   {
@@ -76,9 +76,7 @@ export default function EdgeComputing() {
       <section className="bg-gradient-to-br from-primary-600 via-primary-500 to-primary-400 text-white py-24">
         <Container>
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              边缘算力
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">边缘算力</h1>
             <p className="text-xl text-primary-100 mb-8">
               全球分布式 CDN 网络，为您的业务提供低延迟、高可用的边缘计算服务
             </p>
@@ -102,25 +100,19 @@ export default function EdgeComputing() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">核心服务</h2>
-            <p className="section-subtitle mx-auto">
-              全面的边缘计算解决方案，满足各种业务场景需求
-            </p>
+            <p className="section-subtitle mx-auto">全面的边缘计算解决方案，满足各种业务场景需求</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service) => (
+            {services.map(service => (
               <div key={service.title} className="card">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600">
                     {service.icon}
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {service.description}
-                    </p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
+                    <p className="text-gray-600">{service.description}</p>
                   </div>
                 </div>
               </div>
@@ -134,23 +126,17 @@ export default function EdgeComputing() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">技术优势</h2>
-            <p className="section-subtitle mx-auto">
-              领先的技术实力，为您提供卓越的服务体验
-            </p>
+            <p className="section-subtitle mx-auto">领先的技术实力，为您提供卓越的服务体验</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => (
+            {features.map(feature => (
               <div key={feature.title} className="text-center p-6">
                 <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center text-primary-600 mx-auto mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -161,7 +147,7 @@ export default function EdgeComputing() {
       <Section bg="gray">
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
+            {stats.map(stat => (
               <StatCard key={stat.label} {...stat} />
             ))}
           </div>
@@ -173,20 +159,14 @@ export default function EdgeComputing() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">应用场景</h2>
-            <p className="section-subtitle mx-auto">
-              广泛应用于多个行业场景，助力业务增长
-            </p>
+            <p className="section-subtitle mx-auto">广泛应用于多个行业场景，助力业务增长</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {scenarios.map((scenario) => (
+            {scenarios.map(scenario => (
               <div key={scenario.title} className="card">
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {scenario.title}
-                </h3>
-                <p className="text-gray-600">
-                  {scenario.description}
-                </p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{scenario.title}</h3>
+                <p className="text-gray-600">{scenario.description}</p>
               </div>
             ))}
           </div>
@@ -197,9 +177,7 @@ export default function EdgeComputing() {
       <Section bg="light">
         <Container>
           <div className="bg-gradient-to-r from-primary-600 to-primary-400 rounded-2xl p-8 md:p-12 text-center text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              开始使用边缘算力服务
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">开始使用边缘算力服务</h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
               立即联系我们，获取专属的边缘计算解决方案
             </p>

@@ -1,9 +1,9 @@
-import { CreditCard, Shield, Banknote, Repeat, Lock, BarChart3 } from 'lucide-react'
-import Section from '../components/common/Section'
-import Container from '../components/common/Container'
-import FeatureItem from '../components/business/FeatureItem'
-import Button from '../components/common/Button'
+import { Banknote, BarChart3, CreditCard, Lock, Repeat, Shield } from 'lucide-react'
 import { Link } from 'react-router-dom'
+
+import Button from '../../components/Button'
+import Container from '../../components/Container'
+import Section from '../../components/Section'
 
 const paymentMethods = [
   {
@@ -76,9 +76,7 @@ export default function PaymentFinance() {
       <section className="bg-gradient-to-br from-finance-600 via-finance-500 to-finance-400 text-white py-24">
         <Container>
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              支付金融
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">支付金融</h1>
             <p className="text-xl text-finance-100 mb-8">
               集成主流支付方式，提供安全可靠的金融级支付解决方案
             </p>
@@ -102,25 +100,19 @@ export default function PaymentFinance() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">支付解决方案</h2>
-            <p className="section-subtitle mx-auto">
-              支持多种主流支付方式，满足不同业务场景需求
-            </p>
+            <p className="section-subtitle mx-auto">支持多种主流支付方式，满足不同业务场景需求</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {paymentMethods.map((method) => (
+            {paymentMethods.map(method => (
               <div key={method.title} className="card">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 bg-finance-100 rounded-lg flex items-center justify-center text-finance-600">
                     {method.icon}
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {method.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {method.description}
-                    </p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{method.title}</h3>
+                    <p className="text-gray-600">{method.description}</p>
                   </div>
                 </div>
               </div>
@@ -134,25 +126,19 @@ export default function PaymentFinance() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">金融服务</h2>
-            <p className="section-subtitle mx-auto">
-              全方位的金融技术服务，助力业务发展
-            </p>
+            <p className="section-subtitle mx-auto">全方位的金融技术服务，助力业务发展</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {financialServices.map((service) => (
+            {financialServices.map(service => (
               <div key={service.title} className="card">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 bg-finance-100 rounded-lg flex items-center justify-center text-finance-600">
                     {service.icon}
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {service.description}
-                    </p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
+                    <p className="text-gray-600">{service.description}</p>
                   </div>
                 </div>
               </div>
@@ -166,23 +152,17 @@ export default function PaymentFinance() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">安全保障</h2>
-            <p className="section-subtitle mx-auto">
-              金融级安全防护，为您的交易保驾护航
-            </p>
+            <p className="section-subtitle mx-auto">金融级安全防护，为您的交易保驾护航</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {securityFeatures.map((feature) => (
+            {securityFeatures.map(feature => (
               <div key={feature.title} className="text-center p-6">
                 <div className="w-16 h-16 bg-finance-100 rounded-2xl flex items-center justify-center text-finance-600 mx-auto mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -194,14 +174,24 @@ export default function PaymentFinance() {
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">合作银行</h2>
-            <p className="section-subtitle mx-auto">
-              与多家主流银行深度合作，提供稳定的银行通道
-            </p>
+            <p className="section-subtitle mx-auto">与多家主流银行深度合作，提供稳定的银行通道</p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {['工商银行', '建设银行', '农业银行', '中国银行', '招商银行', '交通银行', '浦发银行', '中信银行'].map((bank) => (
-              <div key={bank} className="flex items-center justify-center p-6 bg-gray-50 rounded-lg">
+            {[
+              '工商银行',
+              '建设银行',
+              '农业银行',
+              '中国银行',
+              '招商银行',
+              '交通银行',
+              '浦发银行',
+              '中信银行',
+            ].map(bank => (
+              <div
+                key={bank}
+                className="flex items-center justify-center p-6 bg-gray-50 rounded-lg"
+              >
                 <span className="text-gray-600 font-medium">{bank}</span>
               </div>
             ))}
@@ -213,9 +203,7 @@ export default function PaymentFinance() {
       <Section bg="light">
         <Container>
           <div className="bg-gradient-to-r from-finance-600 to-finance-400 rounded-2xl p-8 md:p-12 text-center text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              开始使用支付服务
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">开始使用支付服务</h2>
             <p className="text-xl text-finance-100 mb-8 max-w-2xl mx-auto">
               立即联系我们，获取专属的支付解决方案
             </p>

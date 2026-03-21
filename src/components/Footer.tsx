@@ -1,13 +1,5 @@
+import { Github, Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Github, 
-  Linkedin, 
-  Twitter,
-  Wechat
-} from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -35,9 +27,6 @@ export default function Footer() {
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Wechat className="h-5 w-5" />
-              </a>
             </div>
           </div>
 
@@ -48,17 +37,26 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/business/edge-computing" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/business/edge-computing"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   边缘算力
                 </Link>
               </li>
               <li>
-                <Link to="/business/payment-finance" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/business/payment-finance"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   支付金融
                 </Link>
               </li>
               <li>
-                <Link to="/business/ecommerce" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/business/ecommerce"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   电商业务
                 </Link>
               </li>

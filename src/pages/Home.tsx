@@ -1,12 +1,13 @@
-import { Server, CreditCard, ShoppingCart, Shield, Zap, Globe } from 'lucide-react'
-import Hero from '../components/business/Hero'
-import ServiceCard from '../components/business/ServiceCard'
-import Section from '../components/common/Section'
-import Container from '../components/common/Container'
-import StatCard from '../components/business/StatCard'
-import FeatureItem from '../components/business/FeatureItem'
-import Button from '../components/common/Button'
+import { CreditCard, Globe, Server, Shield, ShoppingCart, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
+
+import Button from '../components/Button'
+import Container from '../components/Container'
+import FeatureItem from '../components/FeatureItem'
+import Hero from '../components/Hero'
+import Section from '../components/Section'
+import ServiceCard from '../components/ServiceCard'
+import StatCard from '../components/StatCard'
 
 const services = [
   {
@@ -62,7 +63,7 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <Hero />
-      
+
       {/* Services Section */}
       <Section bg="light">
         <Container>
@@ -72,84 +73,72 @@ export default function Home() {
               我们专注于三大核心业务领域，为客户提供全方位的技术解决方案
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service) => (
+            {services.map(service => (
               <ServiceCard key={service.title} {...service} />
             ))}
           </div>
         </Container>
       </Section>
-      
+
       {/* Features Section */}
       <Section bg="white">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="section-title mb-6">
-                为什么选择我们
-              </h2>
+              <h2 className="section-title mb-6">为什么选择我们</h2>
               <p className="text-lg text-gray-600 mb-8">
                 凭借多年的技术积累和行业经验，我们为客户提供最优质的服务和解决方案。
               </p>
-              
+
               <div className="space-y-6">
-                {features.map((feature) => (
+                {features.map(feature => (
                   <FeatureItem key={feature.title} {...feature} />
                 ))}
               </div>
-              
+
               <div className="mt-8">
                 <Link to="/about">
-                  <Button size="lg">
-                    了解更多
-                  </Button>
+                  <Button size="lg">了解更多</Button>
                 </Link>
               </div>
             </div>
-            
+
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-50 rounded-2xl flex items-center justify-center">
                 <div className="text-center p-8">
                   <Globe className="h-32 w-32 text-primary-600 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    全球服务网络
-                  </h3>
-                  <p className="text-gray-600">
-                    覆盖全球的业务网络，随时随地为您服务
-                  </p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">全球服务网络</h3>
+                  <p className="text-gray-600">覆盖全球的业务网络，随时随地为您服务</p>
                 </div>
               </div>
             </div>
           </div>
         </Container>
       </Section>
-      
+
       {/* Stats Section */}
       <Section bg="gray">
         <Container>
           <div className="text-center mb-12">
             <h2 className="section-title">数据说话</h2>
-            <p className="section-subtitle mx-auto">
-              我们的成绩，您的信心保障
-            </p>
+            <p className="section-subtitle mx-auto">我们的成绩，您的信心保障</p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
+            {stats.map(stat => (
               <StatCard key={stat.label} {...stat} />
             ))}
           </div>
         </Container>
       </Section>
-      
+
       {/* CTA Section */}
       <Section bg="white">
         <Container>
           <div className="bg-gradient-to-r from-primary-600 to-primary-400 rounded-2xl p-8 md:p-12 text-center text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              准备好开始了吗？
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">准备好开始了吗？</h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
               立即联系我们，获取专属的技术解决方案
             </p>

@@ -13,7 +13,7 @@ export default function Container({ children, className = '', size = 'xl' }: Con
     lg: 'max-w-6xl',
     xl: 'max-w-7xl',
   }
-  
+
   return (
     <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${sizeStyles[size]} ${className}`}>
       {children}

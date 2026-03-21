@@ -16,7 +16,8 @@ export default function StatCard({ value, label, suffix = '' }: StatCardProps) {
       transition={{ duration: 0.5 }}
     >
       <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">
-        {value}{suffix}
+        {value}
+        {suffix}
       </div>
       <div className="text-gray-600 text-lg">{label}</div>
     </motion.div>

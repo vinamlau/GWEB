@@ -1,8 +1,9 @@
+import { Mail, MapPin, Phone, Send } from 'lucide-react'
 import { useState } from 'react'
-import { Phone, Mail, MapPin, Send } from 'lucide-react'
-import Section from '../components/common/Section'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
+
+import Button from '../components/Button'
+import Container from '../components/Container'
+import Section from '../components/Section'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
+    // 实际项目中这里应该调用 API 提交表单
     alert('感谢您的留言，我们会尽快联系您！')
   }
 
@@ -23,9 +24,7 @@ export default function Contact() {
       <section className="bg-gradient-to-br from-primary-600 via-primary-500 to-primary-400 text-white py-24">
         <Container>
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              联系我们
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">联系我们</h1>
             <p className="text-xl text-primary-100 mb-8">
               如有任何问题或合作意向，欢迎随时联系我们
             </p>
@@ -81,7 +80,7 @@ export default function Contact() {
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
                 <div>
@@ -94,7 +93,7 @@ export default function Contact() {
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={e => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
                 <div>
@@ -106,7 +105,7 @@ export default function Contact() {
                     id="phone"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
                   />
                 </div>
                 <div>
@@ -119,7 +118,7 @@ export default function Contact() {
                     rows={4}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={e => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
                 <Button type="submit" size="lg" className="w-full">

@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Layout from './components/layout/Layout'
-import Home from './pages/Home'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+import Layout from './components/Layout'
+import About from './pages/About'
+import Ecommerce from './pages/business/Ecommerce'
 import EdgeComputing from './pages/business/EdgeComputing'
 import PaymentFinance from './pages/business/PaymentFinance'
-import Ecommerce from './pages/business/Ecommerce'
-import About from './pages/About'
-import News from './pages/News'
 import Contact from './pages/Contact'
+import Home from './pages/Home'
+import News from './pages/News'
 
 function App() {
   return (

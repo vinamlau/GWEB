@@ -1,7 +1,8 @@
-import Section from '../components/common/Section'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
 import { Link } from 'react-router-dom'
+
+import Button from '../components/Button'
+import Container from '../components/Container'
+import Section from '../components/Section'
 
 export default function About() {
   return (
@@ -9,9 +10,7 @@ export default function About() {
       <section className="bg-gradient-to-br from-primary-600 via-primary-500 to-primary-400 text-white py-24">
         <Container>
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              关于我们
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">关于我们</h1>
             <p className="text-xl text-primary-100 mb-8">
               专注于边缘算力、支付金融、电商业务，为客户提供全方位的技术解决方案
             </p>
@@ -38,13 +37,9 @@ export default function About() {
         <Container>
           <div className="text-center">
             <h2 className="section-title mb-12">联系我们</h2>
-            <p className="text-lg text-gray-600 mb-8">
-              如有任何问题或合作意向，欢迎随时联系我们
-            </p>
+            <p className="text-lg text-gray-600 mb-8">如有任何问题或合作意向，欢迎随时联系我们</p>
             <Link to="/contact">
-              <Button size="lg">
-                立即联系
-              </Button>
+              <Button size="lg">立即联系</Button>
             </Link>
           </div>
         </Container>
