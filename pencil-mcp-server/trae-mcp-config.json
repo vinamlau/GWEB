@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "pencil": {
+      "command": "node",
+      "args": ["/Users/victor/Documents/trae_projects/GWEB/pencil-mcp-server/dist/index.js"],
+      "cwd": "/Users/victor/Documents/trae_projects/GWEB/pencil-mcp-server"
+    }
+  }
+}
