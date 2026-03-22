@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+
+import Button from './Button'
 
 const navItems = [
   { name: '首页', path: '/' },
@@ -21,50 +23,79 @@ const navItems = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const location = useLocation()
 
   const isActive = (path: string) => location.pathname === path
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-400 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gray-900 rounded-none flex items-center justify-center">
                 <span className="text-white font-bold text-xl">G</span>
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-900">集团公司</span>
+              <span className="ml-3 text-xl font-bold text-gray-900 tracking-tight">集团公司</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:space-x-8">
+          <div className="hidden md:flex md:space-x-12">
             {navItems.map(item => (
-              <div key={item.path} className="relative group">
+              <div
+                key={item.path}
+                className="relative group"
+                onMouseEnter={() => item.children && setDropdownOpen(true)}
+                onMouseLeave={() => item.children && setDropdownOpen(false)}
+              >
                 <Link
                   to={item.path}
-                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors ${
-                    isActive(item.path)
-                      ? 'text-primary-600'
-                      : 'text-gray-700 hover:text-primary-600'
+                  className={`inline-flex items-center text-sm font-medium transition-colors ${
+                    isActive(item.path) ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   {item.name}
+                  {item.children && (
+                    <ChevronDown
+                      className={`ml-1 h-4 w-4 transition-transform duration-200 ${
+                        dropdownOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
                 </Link>
                 {item.children && (
-                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="py-1">
-                      {item.children.map(child => (
-                        <Link
-                          key={child.path}
-                          to={child.path}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
+                  <div
+                    className={`absolute left-0 mt-2 w-48 bg-white border border-gray-100 shadow-lg transition-all duration-200 ${
+                      dropdownOpen
+                        ? 'opacity-100 visible translate-y-0'
+                        : 'opacity-0 invisible -translate-y-2'
+                    }`}
+                  >
+                    <div className="py-2">
+                      {item.children.map(child =>
+                        child.external ? (
+                          <a
+                            key={child.path}
+                            href={child.path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                          >
+                            {child.name} ↗
+                          </a>
+                        ) : (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                          >
+                            {child.name}
+                          </Link>
+                        ),
+                      )}
                     </div>
                   </div>
                 )}
@@ -74,8 +105,8 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex">
-            <Link to="/contact" className="btn-primary">
-              立即咨询
+            <Link to="/contact">
+              <Button>立即咨询</Button>
             </Link>
           </div>
 
@@ -83,7 +114,7 @@ export default function Header() {
           <div className="md:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -99,14 +130,14 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t"
+            className="md:hidden bg-white border-t overflow-hidden"
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map(item => (
                 <div key={item.path}>
                   <Link
                     to={item.path}
-                    className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                       isActive(item.path)
                         ? 'bg-primary-50 text-primary-600'
                         : 'text-gray-700 hover:bg-gray-50'
@@ -116,28 +147,38 @@ export default function Header() {
                     {item.name}
                   </Link>
                   {item.children && (
-                    <div className="pl-4 space-y-1">
-                      {item.children.map(child => (
-                        <Link
-                          key={child.path}
-                          to={child.path}
-                          className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
+                    <div className="pl-4 space-y-1 mt-1">
+                      {item.children.map(child =>
+                        child.external ? (
+                          <a
+                            key={child.path}
+                            href={child.path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                          >
+                            {child.name} ↗
+                          </a>
+                        ) : (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {child.name}
+                          </Link>
+                        ),
+                      )}
                     </div>
                   )}
                 </div>
               ))}
-              <Link
-                to="/contact"
-                className="block w-full text-center mt-4 btn-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                立即咨询
-              </Link>
+              <div className="mt-4 px-2">
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full">立即咨询</Button>
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}

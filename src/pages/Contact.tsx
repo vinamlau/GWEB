@@ -121,7 +121,7 @@ export default function Contact() {
                     onChange={e => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full">
+                <Button type="submit" size="md" className="w-full">
                   <Send className="mr-2 h-5 w-5" />
                   提交留言
                 </Button>

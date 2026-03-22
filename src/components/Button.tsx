@@ -2,7 +2,7 @@ import { HTMLMotionProps, motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'white' | 'link'
   size?: 'sm' | 'md' | 'lg'
   children: ReactNode
   loading?: boolean
@@ -18,27 +18,32 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2'
+    'inline-flex items-center justify-center font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full'
 
   const variantStyles = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
-    secondary: 'bg-finance-600 text-white hover:bg-finance-700 focus:ring-finance-500',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus:ring-blue-500',
+    secondary:
+      'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50 active:bg-blue-100 focus:ring-blue-500',
     outline:
-      'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
-    ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
+      'bg-transparent border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white focus:ring-gray-900',
+    ghost: 'bg-transparent text-gray-900 hover:bg-gray-100 focus:ring-gray-500',
+    white: 'bg-white text-gray-900 hover:bg-gray-100 focus:ring-gray-500 shadow-sm',
+    link: 'bg-transparent text-blue-600 hover:text-blue-700 p-0 h-auto focus:ring-blue-500',
   }
 
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-6 py-2.5 text-base',
-    lg: 'px-8 py-3 text-lg',
+    sm: 'px-5 py-2 text-sm',
+    md: 'px-6 py-3 text-base',
+    lg: 'px-8 py-4 text-lg',
   }
 
   const disabledStyles = disabled || loading ? 'opacity-50 cursor-not-allowed' : ''
 
   return (
     <motion.button
-      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${disabledStyles} ${className}`}
+      className={[baseStyles, variantStyles[variant], sizeStyles[size], disabledStyles, className]
+        .filter(Boolean)
+        .join(' ')}
       disabled={disabled || loading}
       whileHover={!disabled && !loading ? { scale: 1.02 } : {}}
       whileTap={!disabled && !loading ? { scale: 0.98 } : {}}

@@ -1,27 +1,46 @@
-# Logs
-logs
-*.log
+# 依赖
+node_modules/
+.pnp
+.pnp.js
+
+# 测试
+coverage/
+
+# 生产构建
+dist/
+build/
+
+# 环境变量
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# 操作系统
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
 
-# Pencil backup
-../pencil-mcp-server-backup
+# 后端
+server/node_modules/
+server/data.db
+server/uploads/*
+!server/uploads/.gitkeep
+server/.env
+
+# 部署脚本（不上传）
+deploy.sh
+install-ssl.sh
+部署准备.md
