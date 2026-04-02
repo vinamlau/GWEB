@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 const Login = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    email: '',
+    email: 'core@sssvip.store',
     password: '',
   })
   const [error, setError] = useState('')
@@ -117,14 +117,6 @@ const Login = () => {
               {loading ? '登录中...' : '登录'}
             </Button>
           </form>
-
-          <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-            <p className="text-xs text-gray-600 font-medium mb-2">测试账户:</p>
-            <div className="text-xs text-gray-500 space-y-1">
-              <p>管理员：admin@example.com / admin123456</p>
-              <p>编辑：editor@example.com / editor123456</p>
-            </div>
-          </div>
         </div>
       </motion.div>
     </div>
