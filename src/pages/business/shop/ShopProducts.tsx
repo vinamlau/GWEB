@@ -85,110 +85,49 @@ const products: ProductCard[] = [
   },
 ]
 
-const features = [
-  {
-    title: '正品保障',
-    description: '所有卡券均为官方正品，支持验证',
-    icon: '✓',
-  },
-  {
-    title: '即时发货',
-    description: '支付成功后自动发货，秒到账',
-    icon: '⚡',
-  },
-  {
-    title: '售后无忧',
-    description: '7 天无理由退换，客服在线支持',
-    icon: '❤',
-  },
-  {
-    title: '安全支付',
-    description: '多重加密，保障资金安全',
-    icon: '🔒',
-  },
-]
+const categories = ['全部', '朴朴卡', '永辉卡', '沃尔玛卡', '世纪联华卡']
 
-const ShopHome = () => {
+const ShopProducts = () => {
   return (
     <ShopLayout>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-gray-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-7xl font-semibold text-gray-900 mb-6">果壳市集</h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              精选优质礼品卡，生活购物更优惠
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/business/shop/products">
-                <Button variant="primary" className="px-8 py-4 text-base">
-                  立即选购
-                </Button>
-              </Link>
-              <Link to="/business/shop/about">
-                <Button variant="secondary" className="px-8 py-4 text-base">
-                  了解更多
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Wave Divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 120"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 0L60 10C120 20 240 40 360 53.3C480 67 600 73 720 73.3C840 73 960 67 1080 53.3C1200 40 1320 20 1380 10L1440 0V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center p-6"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Section */}
-      <section className="py-20 bg-gray-50">
+      {/* Header Section */}
+      <section className="bg-gradient-to-br from-blue-50 via-white to-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center"
           >
-            <h2 className="text-4xl font-semibold text-gray-900 mb-4">热门卡券</h2>
+            <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 mb-4">全部商品</h1>
             <p className="text-xl text-gray-600">精选各大商超礼品卡，优惠多多</p>
           </motion.div>
+        </div>
+      </section>
 
+      {/* Categories Filter */}
+      <section className="py-8 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap gap-3 justify-center">
+            {categories.map((category, index) => (
+              <button
+                key={category}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                  index === 0
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Products Grid */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product, index) => (
               <motion.div
@@ -238,33 +177,24 @@ const ShopHome = () => {
               </motion.div>
             ))}
           </div>
-
-          <div className="text-center mt-12">
-            <Link to="/business/shop/products">
-              <Button variant="secondary" className="px-8 py-4 text-base">
-                查看全部商品
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl font-semibold mb-6">企业采购更优惠</h2>
-            <p className="text-xl text-gray-300 mb-8">大宗采购享受专属折扣，联系客服获取报价</p>
-            <Button
-              variant="secondary"
-              className="px-8 py-4 text-base bg-white text-gray-900 hover:bg-gray-100"
-            >
-              联系客服
-            </Button>
+            <h2 className="text-3xl font-semibold text-gray-900 mb-4">企业采购更优惠</h2>
+            <p className="text-xl text-gray-600 mb-8">大宗采购享受专属折扣，联系客服获取报价</p>
+            <Link to="/contact">
+              <Button variant="primary" className="px-8 py-4 text-base">
+                联系客服
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -272,4 +202,4 @@ const ShopHome = () => {
   )
 }
 
-export default ShopHome
+export default ShopProducts

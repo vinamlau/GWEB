@@ -14,12 +14,14 @@ import Images from './pages/admin/Images'
 import AdminLogin from './pages/admin/Login'
 import Menus from './pages/admin/Menus'
 import ShopOrders from './pages/admin/ShopOrders'
-import ShopProducts from './pages/admin/ShopProducts'
+import ShopProductsAdmin from './pages/admin/ShopProducts'
 import Users from './pages/admin/Users'
 import Ecommerce from './pages/business/Ecommerce'
 import EdgeComputing from './pages/business/EdgeComputing'
 import PaymentFinance from './pages/business/PaymentFinance'
+import ShopAbout from './pages/business/shop/ShopAbout'
 import ShopLayoutHome from './pages/business/shop/ShopHome'
+import ShopProducts from './pages/business/shop/ShopProducts'
 import Contact from './pages/Contact'
 import Home from './pages/Home'
 import HuskHome from './pages/husk/Home'
@@ -49,6 +51,8 @@ function FrontendRoutes() {
         <Route path="/kaisun" element={<KaisunHome />} />
         <Route path="/somibox" element={<SomiboxHome />} />
         <Route path="/business/shop" element={<ShopLayoutHome />} />
+        <Route path="/business/shop/products" element={<ShopProducts />} />
+        <Route path="/business/shop/about" element={<ShopAbout />} />
       </Routes>
     </Layout>
   )
@@ -69,7 +73,7 @@ function AdminRoutes() {
       <Route path="/admin/menus" element={<Menus />} />
       <Route path="/admin/banners" element={<Banners />} />
       <Route path="/admin/configs" element={<Configs />} />
-      <Route path="/admin/shop-products" element={<ShopProducts />} />
+      <Route path="/admin/shop-products" element={<ShopProductsAdmin />} />
       <Route path="/admin/shop-orders" element={<ShopOrders />} />
     </Routes>
   )
