@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-import Button from '../../components/Button'
-import ShopLayout from '../../components/shop/ShopLayout'
+import Button from '../../../components/Button'
+import ShopLayout from '../../../components/shop/ShopLayout'
 
 interface ProductCard {
   id: number
