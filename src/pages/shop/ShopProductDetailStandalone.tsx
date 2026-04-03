@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import Button from '../../../components/Button'
+import Button from '../../../../components/Button'
 
 interface ProductCard {
   id: number
