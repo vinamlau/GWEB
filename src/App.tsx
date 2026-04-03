@@ -55,17 +55,26 @@ function FrontendRoutes() {
         <Route path="/husk/compute-map" element={<ComputeNodeMap />} />
         <Route path="/kaisun" element={<KaisunHome />} />
         <Route path="/somibox" element={<SomiboxHome />} />
+        {/* 业务板块展示页，点击跳转到独立商城页面 */}
         <Route path="/business/shop" element={<ShopLayoutHome />} />
         <Route path="/business/shop/products" element={<ShopProducts />} />
         <Route path="/business/shop/products/:id" element={<ShopProductDetail />} />
         <Route path="/business/shop/about" element={<ShopAbout />} />
-        {/* 独立商城页面（不带集团官网导航） */}
-        <Route path="/shop" element={<ShopHomeStandalone />} />
-        <Route path="/shop/products" element={<ShopProductsStandalone />} />
-        <Route path="/shop/products/:id" element={<ShopProductDetailStandalone />} />
-        <Route path="/shop/about" element={<ShopAboutStandalone />} />
       </Routes>
     </Layout>
+  )
+}
+
+// 独立商城路由组件（不带 Layout）
+function ShopRoutes() {
+  return (
+    <Routes>
+      {/* 独立商城页面（不带集团官网导航） */}
+      <Route path="/shop" element={<ShopHomeStandalone />} />
+      <Route path="/shop/products" element={<ShopProductsStandalone />} />
+      <Route path="/shop/products/:id" element={<ShopProductDetailStandalone />} />
+      <Route path="/shop/about" element={<ShopAboutStandalone />} />
+    </Routes>
   )
 }
 
@@ -94,8 +103,15 @@ function AdminRoutes() {
 function AppRoutes() {
   const location = useLocation()
   const isAdmin = isAdminRoute(location.pathname)
+  const isShop = location.pathname.startsWith('/shop')
 
-  return isAdmin ? <AdminRoutes /> : <FrontendRoutes />
+  if (isAdmin) {
+    return <AdminRoutes />
+  }
+  if (isShop) {
+    return <ShopRoutes />
+  }
+  return <FrontendRoutes />
 }
 
 function App() {
