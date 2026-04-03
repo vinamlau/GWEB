@@ -23,7 +23,8 @@ const products: ProductCard[] = [
     brand: '朴朴',
     price: 95,
     originalPrice: 100,
-    image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&h=300&fit=crop',
+    image:
+      'https://img.alicdn.com/imgextra/i2/O1CN01Z7zK8R1MbFQvJKdWZ_!!6000000001455-0-tps-800-600.jpg',
     description: '全品类通用，新鲜到家，30 分钟送达',
     stock: 500,
     category: '朴朴卡',
@@ -34,7 +35,8 @@ const products: ProductCard[] = [
     brand: '朴朴',
     price: 190,
     originalPrice: 200,
-    image: 'https://images.unsplash.com/photo-1607082349566-1873422c8082?w=400&h=300&fit=crop',
+    image:
+      'https://img.alicdn.com/imgextra/i3/O1CN01hKZ9nN1zKxvJKdWZ_!!6000000006693-0-tps-800-600.jpg',
     description: '家庭优选，实惠多多',
     stock: 300,
     category: '朴朴卡',
@@ -45,7 +47,8 @@ const products: ProductCard[] = [
     brand: '永辉',
     price: 97,
     originalPrice: 100,
-    image: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=300&fit=crop',
+    image:
+      'https://img.alicdn.com/imgextra/i4/O1CN01Y8zK8R1MbFQvJKdWZ_!!6000000001455-0-tps-800-600.jpg',
     description: '生鲜优选，品质生活',
     stock: 400,
     category: '永辉卡',
@@ -56,7 +59,8 @@ const products: ProductCard[] = [
     brand: '沃尔玛',
     price: 485,
     originalPrice: 500,
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop',
+    image:
+      'https://img.alicdn.com/imgextra/i1/O1CN01X9zK8R1MbFQvJKdWZ_!!6000000001455-0-tps-800-600.jpg',
     description: '超值大额，企业采购首选',
     stock: 150,
     category: '沃尔玛卡',
@@ -67,7 +71,8 @@ const products: ProductCard[] = [
     brand: '世纪联华',
     price: 96,
     originalPrice: 100,
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
+    image:
+      'https://img.alicdn.com/imgextra/i2/O1CN01W7zK8R1MbFQvJKdWZ_!!6000000001455-0-tps-800-600.jpg',
     description: '便捷购物，优惠多多',
     stock: 450,
     category: '世纪联华卡',
@@ -78,7 +83,8 @@ const products: ProductCard[] = [
     brand: '永辉',
     price: 288,
     originalPrice: 300,
-    image: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=400&h=300&fit=crop',
+    image:
+      'https://img.alicdn.com/imgextra/i3/O1CN01V8zK8R1MbFQvJKdWZ_!!6000000001455-0-tps-800-600.jpg',
     description: '大额优惠，购物更划算',
     stock: 200,
     category: '永辉卡',
@@ -199,12 +205,21 @@ const ShopHome = () => {
                 className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer"
                 onClick={() => (window.location.href = `/business/shop/products/${product.id}`)}
               >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
+                <div
+                  className={`relative h-64 flex items-center justify-center ${
+                    product.brand === '朴朴'
+                      ? 'bg-gradient-to-br from-green-400 to-green-600'
+                      : product.brand === '永辉'
+                        ? 'bg-gradient-to-br from-red-400 to-red-600'
+                        : product.brand === '沃尔玛'
+                          ? 'bg-gradient-to-br from-blue-400 to-blue-600'
+                          : 'bg-gradient-to-br from-orange-400 to-orange-600'
+                  }`}
+                >
+                  <div className="text-center text-white p-8">
+                    <div className="text-6xl font-bold mb-4">{product.brand}</div>
+                    <div className="text-2xl font-semibold opacity-90">礼品卡</div>
+                  </div>
                 </div>
 
                 <div className="p-6">
