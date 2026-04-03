@@ -6,6 +6,7 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   size?: 'sm' | 'md' | 'lg'
   children: ReactNode
   loading?: boolean
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export default function Button({

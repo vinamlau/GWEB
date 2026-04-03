@@ -97,6 +97,7 @@ const ShopProducts = () => {
   const navigate = useNavigate()
 
   const handleBuyNow = (productId: number) => {
+    console.log('点击购买，商品 ID:', productId)
     navigate(`/business/shop/products/${productId}`)
   }
 
@@ -147,8 +148,7 @@ const ShopProducts = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer"
-                onClick={() => (window.location.href = `/business/shop/products/${product.id}`)}
+                className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
               >
                 <div
                   className={`relative h-64 flex items-center justify-center ${
