@@ -21,6 +21,7 @@ import EdgeComputing from './pages/business/EdgeComputing'
 import PaymentFinance from './pages/business/PaymentFinance'
 import ShopAbout from './pages/business/shop/ShopAbout'
 import ShopLayoutHome from './pages/business/shop/ShopHome'
+import ShopProductDetail from './pages/business/shop/ShopProductDetail'
 import ShopProducts from './pages/business/shop/ShopProducts'
 import Contact from './pages/Contact'
 import Home from './pages/Home'
@@ -52,6 +53,7 @@ function FrontendRoutes() {
         <Route path="/somibox" element={<SomiboxHome />} />
         <Route path="/business/shop" element={<ShopLayoutHome />} />
         <Route path="/business/shop/products" element={<ShopProducts />} />
+        <Route path="/business/shop/products/:id" element={<ShopProductDetail />} />
         <Route path="/business/shop/about" element={<ShopAbout />} />
       </Routes>
     </Layout>

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Button from '../../../components/Button'
 import ShopLayout from '../../../components/shop/ShopLayout'
@@ -115,6 +115,12 @@ const features = [
 ]
 
 const ShopHome = () => {
+  const navigate = useNavigate()
+
+  const handleBuyNow = (productId: number) => {
+    navigate(`/business/shop/products/${productId}`)
+  }
+
   return (
     <ShopLayout>
       {/* Hero Section */}
@@ -239,7 +245,14 @@ const ShopHome = () => {
                     <span className="text-2xl font-bold text-gray-900">
                       ¥{product.originalPrice}
                     </span>
-                    <Button variant="primary" className="px-6 py-2 rounded-full">
+                    <Button
+                      variant="primary"
+                      className="px-6 py-2 rounded-full"
+                      onClick={e => {
+                        e.stopPropagation()
+                        handleBuyNow(product.id)
+                      }}
+                    >
                       购买
                     </Button>
                   </div>
