@@ -12,21 +12,24 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-8">
-              <Link to="/shop" className="text-2xl font-semibold text-gray-900">
+              <Link to="/business/shop" className="text-2xl font-semibold text-gray-900">
                 果壳市集
               </Link>
               <nav className="hidden md:flex items-center gap-6">
-                <Link to="/shop" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <Link
+                  to="/business/shop"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                >
                   首页
                 </Link>
                 <Link
-                  to="/shop/products"
+                  to="/business/shop/products"
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   全部商品
                 </Link>
                 <Link
-                  to="/shop/about"
+                  to="/business/shop/about"
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   关于我们
@@ -36,7 +39,7 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="flex items-center gap-4">
               <Link
-                to="/shop/cart"
+                to="/business/shop/cart"
                 className="relative text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +52,7 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
                 </svg>
                 {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                    {_cartCount}
+                    {cartCount}
                   </span>
                 )}
               </Link>

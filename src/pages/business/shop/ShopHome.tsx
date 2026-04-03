@@ -125,12 +125,12 @@ const ShopHome = () => {
               精选优质礼品卡，生活购物更优惠
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/shop/products">
+              <Link to="/business/shop/products">
                 <Button variant="primary" className="px-8 py-4 text-base">
                   立即选购
                 </Button>
               </Link>
-              <Link to="/shop/about">
+              <Link to="/business/shop/about">
                 <Button variant="secondary" className="px-8 py-4 text-base">
                   了解更多
                 </Button>
@@ -197,7 +197,7 @@ const ShopHome = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer"
-                onClick={() => (window.location.href = `/shop/products/${product.id}`)}
+                onClick={() => (window.location.href = `/business/shop/products/${product.id}`)}
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
@@ -205,9 +205,6 @@ const ShopHome = () => {
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    省 ¥{product.originalPrice - product.price}
-                  </div>
                 </div>
 
                 <div className="p-6">
@@ -224,12 +221,7 @@ const ShopHome = () => {
                   <p className="text-gray-600 text-sm mb-4">{product.description}</p>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-red-600">¥{product.price}</span>
-                      <span className="text-gray-400 line-through text-sm">
-                        ¥{product.originalPrice}
-                      </span>
-                    </div>
+                    <span className="text-2xl font-bold text-gray-900">¥{product.price}</span>
                     <Button variant="primary" className="px-6 py-2 rounded-full">
                       购买
                     </Button>
@@ -240,7 +232,7 @@ const ShopHome = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Link to="/shop/products">
+            <Link to="/business/shop/products">
               <Button variant="secondary" className="px-8 py-4 text-base">
                 查看全部商品
               </Button>

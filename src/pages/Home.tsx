@@ -28,6 +28,13 @@ const services = [
     link: '/business/ecommerce',
     features: ['平台入驻', '私域运营', '供应链管理'],
   },
+  {
+    title: '果壳市集',
+    description: '精选优质礼品卡，便捷实惠的线上购物平台',
+    icon: <ShoppingCart className="h-8 w-8" />,
+    link: '/business/shop',
+    features: ['朴朴卡券', '永辉卡券', '沃尔玛卡券'],
+  },
 ]
 
 const stats = [
@@ -102,7 +109,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="heading-2 mb-4">核心业务</h2>
             <p className="section-subtitle mx-auto max-w-2xl">
-              我们专注于三大核心业务领域，为客户提供全方位的技术解决方案
+              我们专注于四大核心业务领域，为客户提供全方位的技术解决方案
             </p>
           </div>
 
