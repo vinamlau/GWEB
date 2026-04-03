@@ -104,6 +104,61 @@ const initializeDB = () => {
     )
   `)
 
+  // 商城商品表
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS shop_products (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      brand TEXT,
+      category TEXT,
+      description TEXT,
+      price REAL NOT NULL,
+      originalPrice REAL,
+      stock INTEGER DEFAULT 0,
+      image TEXT,
+      images TEXT DEFAULT '[]',
+      status TEXT DEFAULT 'on_sale',
+      sales INTEGER DEFAULT 0,
+      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
+
+  // 商城订单表
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS shop_orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      orderNo TEXT UNIQUE NOT NULL,
+      userId INTEGER,
+      customerName TEXT NOT NULL,
+      customerPhone TEXT NOT NULL,
+      customerEmail TEXT,
+      totalAmount REAL NOT NULL,
+      payAmount REAL NOT NULL,
+      discountAmount REAL DEFAULT 0,
+      status TEXT DEFAULT 'pending',
+      payTime DATETIME,
+      payMethod TEXT,
+      payTransactionNo TEXT,
+      items TEXT NOT NULL,
+      remark TEXT,
+      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
+
+  // 购物车表
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS shop_cart (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      sessionId TEXT NOT NULL,
+      productId INTEGER NOT NULL,
+      quantity INTEGER DEFAULT 1,
+      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
+
   const adminExists = db.prepare('SELECT * FROM users WHERE email = ?').get('admin@example.com')
   if (!adminExists) {
     const hashedPassword = bcrypt.hashSync('admin123456', 10)

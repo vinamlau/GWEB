@@ -22,6 +22,7 @@ import Home from './pages/Home'
 import HuskHome from './pages/husk/Home'
 import KaisunHome from './pages/kaisun/Home'
 import News from './pages/News'
+import ShopLayoutHome from './pages/shop/ShopHome'
 import SomiboxHome from './pages/somibox/Home'
 
 // 判断是否是后台管理页面
@@ -45,6 +46,7 @@ function FrontendRoutes() {
         <Route path="/husk/compute-map" element={<ComputeNodeMap />} />
         <Route path="/kaisun" element={<KaisunHome />} />
         <Route path="/somibox" element={<SomiboxHome />} />
+        <Route path="/shop" element={<ShopLayoutHome />} />
       </Routes>
     </Layout>
   )
