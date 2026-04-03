@@ -144,9 +144,6 @@ const ShopProducts = () => {
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    省 ¥{product.originalPrice - product.price}
-                  </div>
                 </div>
 
                 <div className="p-6">
@@ -163,12 +160,9 @@ const ShopProducts = () => {
                   <p className="text-gray-600 text-sm mb-4">{product.description}</p>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-red-600">¥{product.price}</span>
-                      <span className="text-gray-400 line-through text-sm">
-                        ¥{product.originalPrice}
-                      </span>
-                    </div>
+                    <span className="text-2xl font-bold text-gray-900">
+                      ¥{product.originalPrice}
+                    </span>
                     <Button variant="primary" className="px-6 py-2 rounded-full">
                       购买
                     </Button>
