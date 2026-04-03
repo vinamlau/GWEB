@@ -14,7 +14,7 @@ const navItems = [
       { name: '边缘算力', path: '/business/edge-computing', external: false },
       { name: '支付金融', path: '/business/payment-finance', external: false },
       { name: '电商业务', path: '/business/ecommerce', external: false },
-      { name: '果壳市集', path: '/business/shop', external: false },
+      { name: '果壳市集', path: '/shop', external: false },
     ],
   },
   { name: '关于我们', path: '/about' },

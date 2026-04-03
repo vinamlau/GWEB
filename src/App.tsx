@@ -28,6 +28,10 @@ import Home from './pages/Home'
 import HuskHome from './pages/husk/Home'
 import KaisunHome from './pages/kaisun/Home'
 import News from './pages/News'
+import ShopAboutStandalone from './pages/shop/ShopAboutStandalone'
+import ShopHomeStandalone from './pages/shop/ShopHomeStandalone'
+import ShopProductDetailStandalone from './pages/shop/ShopProductDetailStandalone'
+import ShopProductsStandalone from './pages/shop/ShopProductsStandalone'
 import SomiboxHome from './pages/somibox/Home'
 
 // 判断是否是后台管理页面
@@ -55,6 +59,11 @@ function FrontendRoutes() {
         <Route path="/business/shop/products" element={<ShopProducts />} />
         <Route path="/business/shop/products/:id" element={<ShopProductDetail />} />
         <Route path="/business/shop/about" element={<ShopAbout />} />
+        {/* 独立商城页面（不带集团官网导航） */}
+        <Route path="/shop" element={<ShopHomeStandalone />} />
+        <Route path="/shop/products" element={<ShopProductsStandalone />} />
+        <Route path="/shop/products/:id" element={<ShopProductDetailStandalone />} />
+        <Route path="/shop/about" element={<ShopAboutStandalone />} />
       </Routes>
     </Layout>
   )
