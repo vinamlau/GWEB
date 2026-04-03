@@ -13,16 +13,18 @@ import Images from './pages/admin/Images'
 // Admin pages
 import AdminLogin from './pages/admin/Login'
 import Menus from './pages/admin/Menus'
+import ShopOrders from './pages/admin/ShopOrders'
+import ShopProducts from './pages/admin/ShopProducts'
 import Users from './pages/admin/Users'
 import Ecommerce from './pages/business/Ecommerce'
 import EdgeComputing from './pages/business/EdgeComputing'
 import PaymentFinance from './pages/business/PaymentFinance'
+import ShopLayoutHome from './pages/business/shop/ShopHome'
 import Contact from './pages/Contact'
 import Home from './pages/Home'
 import HuskHome from './pages/husk/Home'
 import KaisunHome from './pages/kaisun/Home'
 import News from './pages/News'
-import ShopLayoutHome from './pages/shop/ShopHome'
 import SomiboxHome from './pages/somibox/Home'
 
 // 判断是否是后台管理页面
@@ -46,7 +48,7 @@ function FrontendRoutes() {
         <Route path="/husk/compute-map" element={<ComputeNodeMap />} />
         <Route path="/kaisun" element={<KaisunHome />} />
         <Route path="/somibox" element={<SomiboxHome />} />
-        <Route path="/shop" element={<ShopLayoutHome />} />
+        <Route path="/business/shop" element={<ShopLayoutHome />} />
       </Routes>
     </Layout>
   )
@@ -67,6 +69,8 @@ function AdminRoutes() {
       <Route path="/admin/menus" element={<Menus />} />
       <Route path="/admin/banners" element={<Banners />} />
       <Route path="/admin/configs" element={<Configs />} />
+      <Route path="/admin/shop-products" element={<ShopProducts />} />
+      <Route path="/admin/shop-orders" element={<ShopOrders />} />
     </Routes>
   )
 }

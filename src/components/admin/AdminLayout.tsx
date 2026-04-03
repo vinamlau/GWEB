@@ -44,6 +44,8 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { path: '/admin/menus', label: '菜单管理', icon: '📋' },
     { path: '/admin/banners', label: '广告管理', icon: '📢' },
     { path: '/admin/configs', label: '站点配置', icon: '⚙️' },
+    { path: '/admin/shop-products', label: '商品管理', icon: '🛍️' },
+    { path: '/admin/shop-orders', label: '订单管理', icon: '📦' },
   ]
 
   if (!user) {
