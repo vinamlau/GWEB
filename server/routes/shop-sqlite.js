@@ -338,6 +338,7 @@ const initializeProducts = () => {
   }
 }
 
-initializeProducts()
+// 暂时注释掉，避免启动时出错
+// initializeProducts()
 
 module.exports = router

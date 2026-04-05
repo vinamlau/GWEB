@@ -17,6 +17,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.8.0",
     "framer-motion": "^12.0.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",

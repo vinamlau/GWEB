@@ -2,7 +2,13 @@ const { db } = require('../config/db-sqlite')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+console.log('JWT_SECRET loaded:', process.env.JWT_SECRET ? 'YES' : 'NO')
+
 const generateToken = id => {
+  console.log(
+    'Generating token with secret:',
+    process.env.JWT_SECRET ? process.env.JWT_SECRET.substring(0, 10) + '...' : 'UNDEFINED',
+  )
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   })

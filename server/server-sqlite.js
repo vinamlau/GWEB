@@ -1,9 +1,11 @@
+const path = require('path')
+require('dotenv').config({ path: path.join(__dirname, '.env') })
+
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 const compression = require('compression')
 const morgan = require('morgan')
-const path = require('path')
 
 const { initializeDB } = require('./config/db-sqlite')
 
