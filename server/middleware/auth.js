@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const User = require('../models/User')
+const db = require('../config/db-sqlite')
 
 const protect = async (req, res, next) => {
   let token
@@ -8,7 +8,11 @@ const protect = async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1]
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      req.user = await User.findById(decoded.id).select('-password')
+      // SQLite: 从数据库获取用户
+      req.user = db.prepare('SELECT * FROM users WHERE id = ?').get(decoded.id)
+      if (!req.user) {
+        return res.status(401).json({ message: '用户不存在' })
+      }
       next()
     } catch (error) {
       console.error(error)
