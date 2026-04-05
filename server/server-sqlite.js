@@ -27,12 +27,40 @@ const app = express()
 
 initializeDB()
 
-app.use(helmet())
-app.use(cors())
+app.use(
+  cors({
+    origin: '*',
+    credentials: false,
+  }),
+)
 app.use(compression())
 app.use(morgan('dev'))
 app.use(express.json())
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+// 配置上传文件目录的静态访问，允许跨域（必须在 helmet 之前配置）
+app.use(
+  '/uploads',
+  (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type')
+    next()
+  },
+  express.static(path.join(__dirname, 'uploads'), {
+    setHeaders: res => {
+      res.setHeader('Access-Control-Allow-Origin', '*')
+      res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
+    },
+  }),
+)
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: false,
+  }),
+)
 
 app.use('/api/auth', authRoutes)
 app.use('/api/articles', articleRoutes)

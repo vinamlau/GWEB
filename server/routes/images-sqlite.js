@@ -13,7 +13,11 @@ router.post('/upload', protect, editor, upload.single('image'), (req, res) => {
     const { originalname, filename, path: filePath, size, mimetype } = req.file
     const { category = 'other', width = 0, height = 0 } = req.body
 
-    const imageUrl = `/uploads/${filePath.split('/uploads/')[1]}`
+    // 从完整路径中提取相对路径
+    const uploadsIndex = filePath.indexOf('uploads')
+    const relativePath =
+      uploadsIndex >= 0 ? filePath.substring(uploadsIndex) : `uploads/${filename}`
+    const imageUrl = '/' + relativePath
 
     const result = db
       .prepare(

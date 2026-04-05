@@ -8,6 +8,7 @@ import About from './pages/About'
 import ArticleEditor from './pages/admin/ArticleEditor'
 import Articles from './pages/admin/Articles'
 import Banners from './pages/admin/Banners'
+import BusinessPages from './pages/admin/BusinessPages'
 import Comments from './pages/admin/Comments'
 import Configs from './pages/admin/Configs'
 import AdminDashboard from './pages/admin/Dashboard'
@@ -16,6 +17,7 @@ import Images from './pages/admin/Images'
 // Admin pages
 import AdminLogin from './pages/admin/Login'
 import Menus from './pages/admin/Menus'
+import NewsListPage from './pages/admin/NewsListPage'
 import Pages from './pages/admin/Pages'
 import ShopOrders from './pages/admin/ShopOrders'
 import ShopProductsAdmin from './pages/admin/ShopProducts'
@@ -89,6 +91,8 @@ function AdminRoutes() {
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/pages" element={<Pages />} />
+      <Route path="/admin/business-pages" element={<BusinessPages />} />
+      <Route path="/admin/news-list" element={<NewsListPage />} />
       <Route path="/admin/footer" element={<Footer />} />
       <Route path="/admin/articles" element={<Articles />} />
       <Route path="/admin/articles/new" element={<ArticleEditor />} />
@@ -118,10 +122,13 @@ function AppRoutes() {
         const response = await fetch(`${API_URL}/api/config`)
         if (response.ok) {
           const data = await response.json()
-          const configMap = data.reduce((acc: Record<string, string>, item: any) => {
-            acc[item.key] = item.value
-            return acc
-          }, {})
+          const configMap = data.reduce(
+            (acc: Record<string, string>, item: { key: string; value: string }) => {
+              acc[item.key] = item.value
+              return acc
+            },
+            {},
+          )
 
           // 更新 favicon
           if (configMap.favicon) {
@@ -144,7 +151,6 @@ function AppRoutes() {
 
     // 监听配置更新事件
     const handleConfigUpdate = () => {
-      console.log('站点配置已更新，刷新 favicon 和 title...')
       fetchConfig()
     }
     window.addEventListener('siteConfigUpdated', handleConfigUpdate)

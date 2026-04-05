@@ -83,6 +83,9 @@ const Footer = () => {
         return
       }
 
+      // 触发页脚更新事件，通知前台刷新
+      window.dispatchEvent(new CustomEvent('footerUpdated'))
+
       setShowModal(false)
       setEditingFooter(null)
       setFormData({

@@ -1,5 +1,6 @@
 const express = require('express')
 const { db } = require('../config/db-sqlite')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -29,12 +30,18 @@ router.get('/:id', (req, res) => {
 })
 
 // 创建菜单
-router.post('/', (req, res) => {
+router.post('/', auth.protect, auth.editor, (req, res) => {
   try {
     const { title, url, parentId, order, active } = req.body
     const result = db
       .prepare('INSERT INTO menus (title, url, parentId, `order`, active) VALUES (?, ?, ?, ?, ?)')
-      .run(title, url, parentId || null, order || 0, active !== undefined ? active : true)
+      .run(
+        title,
+        url,
+        parentId !== undefined ? parentId : null,
+        order || 0,
+        active === true || active === 1 ? 1 : 0,
+      )
 
     const newMenu = db.prepare('SELECT * FROM menus WHERE id = ?').get(result.lastInsertRowid)
     res.status(201).json({ menu: newMenu })
@@ -45,7 +52,7 @@ router.post('/', (req, res) => {
 })
 
 // 更新菜单
-router.put('/:id', (req, res) => {
+router.put('/:id', auth.protect, auth.editor, (req, res) => {
   try {
     const { title, url, parentId, order, active } = req.body
     const menuId = req.params.id
@@ -55,20 +62,29 @@ router.put('/:id', (req, res) => {
       return res.status(404).json({ error: '菜单不存在' })
     }
 
-    db.prepare(
+    const updateStmt = db.prepare(
       'UPDATE menus SET title = ?, url = ?, parentId = ?, `order` = ?, active = ? WHERE id = ?',
-    ).run(title, url, parentId, order, active !== undefined ? active : true, menuId)
+    )
+    updateStmt.run(
+      title,
+      url,
+      parentId !== undefined ? parentId : null,
+      order || 0,
+      active === true || active === 1 ? 1 : 0,
+      menuId,
+    )
 
     const updatedMenu = db.prepare('SELECT * FROM menus WHERE id = ?').get(menuId)
     res.json({ menu: updatedMenu })
   } catch (error) {
     console.error('更新菜单失败:', error)
-    res.status(500).json({ error: '更新菜单失败' })
+    console.error('错误详情:', error.message, error.stack)
+    res.status(500).json({ error: '更新菜单失败', details: error.message })
   }
 })
 
 // 删除菜单
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth.protect, auth.editor, (req, res) => {
   try {
     const menuId = req.params.id
     const menu = db.prepare('SELECT * FROM menus WHERE id = ?').get(menuId)

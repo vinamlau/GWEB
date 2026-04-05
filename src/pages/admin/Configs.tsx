@@ -144,9 +144,10 @@ const Configs = () => {
     }
 
     setUploading(configKey)
+
     const formData = new FormData()
     formData.append('image', file)
-    formData.append('category', 'logo')
+    formData.append('category', 'branding')
 
     try {
       const response = await fetch(`${API_URL}/api/images/upload`, {
@@ -293,22 +294,34 @@ const Configs = () => {
                                     onChange={e => handleLogoUpload(e, config.key)}
                                     className="hidden"
                                   />
-                                  <button
-                                    onClick={() => {
-                                      if (config.key === 'logo' && logoInputRef.current) {
-                                        logoInputRef.current.click()
-                                      } else if (
-                                        config.key === 'favicon' &&
-                                        faviconInputRef.current
-                                      ) {
-                                        faviconInputRef.current.click()
-                                      }
-                                    }}
-                                    disabled={uploading === config.key}
-                                    className="text-sm bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                  >
-                                    {uploading === config.key ? '📤 上传中...' : '📷 上传图片'}
-                                  </button>
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      onClick={() => {
+                                        if (config.key === 'logo' && logoInputRef.current) {
+                                          logoInputRef.current.click()
+                                        } else if (
+                                          config.key === 'favicon' &&
+                                          faviconInputRef.current
+                                        ) {
+                                          faviconInputRef.current.click()
+                                        }
+                                      }}
+                                      disabled={uploading === config.key}
+                                      className="text-sm bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      {uploading === config.key ? '📤 上传中...' : '📷 上传图片'}
+                                    </button>
+                                    {config.key === 'logo' && (
+                                      <span className="text-xs text-gray-500">
+                                        💡 建议尺寸：200x60px 或 400x120px（PNG 格式，透明背景）
+                                      </span>
+                                    )}
+                                    {config.key === 'favicon' && (
+                                      <span className="text-xs text-gray-500">
+                                        💡 建议尺寸：32x32px 或 64x64px（ICO 或 PNG 格式）
+                                      </span>
+                                    )}
+                                  </div>
                                 </>
                               ) : (
                                 <button

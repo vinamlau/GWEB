@@ -7,7 +7,7 @@ const router = express.Router()
 // 获取所有页面
 router.get('/', (req, res) => {
   try {
-    const pages = db.prepare('SELECT * FROM pages ORDER BY updated_at DESC').all()
+    const pages = db.prepare('SELECT * FROM pages ORDER BY id DESC').all()
     res.json(pages)
   } catch (error) {
     console.error('获取页面列表失败:', error)
@@ -33,9 +33,11 @@ router.get('/:slug', (req, res) => {
 router.post('/', auth.protect, auth.editor, (req, res) => {
   try {
     const { title, slug, content, seoTitle, seoDescription, active } = req.body
-    const stmt = db.prepare('INSERT INTO pages (title, slug, content, seo_title, seo_description, active) VALUES (?, ?, ?, ?, ?, ?)')
+    const stmt = db.prepare(
+      'INSERT INTO pages (title, slug, content, seoTitle, seoDescription, active) VALUES (?, ?, ?, ?, ?, ?)',
+    )
     const result = stmt.run(title, slug, content, seoTitle, seoDescription, active ? 1 : 0)
-    
+
     const page = db.prepare('SELECT * FROM pages WHERE id = ?').get(result.lastInsertRowid)
     res.status(201).json(page)
   } catch (error) {
@@ -48,9 +50,11 @@ router.post('/', auth.protect, auth.editor, (req, res) => {
 router.put('/:id', auth.protect, auth.editor, (req, res) => {
   try {
     const { title, slug, content, seoTitle, seoDescription, active } = req.body
-    const stmt = db.prepare('UPDATE pages SET title = ?, slug = ?, content = ?, seo_title = ?, seo_description = ?, active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+    const stmt = db.prepare(
+      'UPDATE pages SET title = ?, slug = ?, content = ?, seoTitle = ?, seoDescription = ?, active = ?, updatedAt = CURRENT_TIMESTAMP WHERE id = ?',
+    )
     stmt.run(title, slug, content, seoTitle, seoDescription, active ? 1 : 0, req.params.id)
-    
+
     const page = db.prepare('SELECT * FROM pages WHERE id = ?').get(req.params.id)
     res.json(page)
   } catch (error) {

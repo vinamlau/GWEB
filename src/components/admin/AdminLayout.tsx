@@ -37,7 +37,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   const menuItems = [
     { path: '/admin/dashboard', label: '仪表盘', icon: '📊' },
-    { path: '/admin/pages', label: '页面管理', icon: '📄' },
+    { path: '/admin/pages', label: '单页管理', icon: '📄' },
+    { path: '/admin/business-pages', label: '业务板块', icon: '💼' },
+    { path: '/admin/news-list', label: '新闻列表页', icon: '📰' },
     { path: '/admin/footer', label: '页脚配置', icon: '🔽' },
     { path: '/admin/articles', label: '文章管理', icon: '📝' },
     { path: '/admin/images', label: '图片管理', icon: '🖼️' },
