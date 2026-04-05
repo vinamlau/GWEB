@@ -1,6 +1,6 @@
 const express = require('express')
 const { db } = require('../config/db-sqlite')
-const auth = require('../middleware/auth')
+const { protect, editor } = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -30,7 +30,7 @@ router.get('/:slug', (req, res) => {
 })
 
 // 创建页面
-router.post('/', auth.protect, auth.editor, (req, res) => {
+router.post('/', protect, editor, (req, res) => {
   try {
     const { title, slug, content, seoTitle, seoDescription, active } = req.body
     const stmt = db.prepare(
@@ -47,7 +47,7 @@ router.post('/', auth.protect, auth.editor, (req, res) => {
 })
 
 // 更新页面
-router.put('/:id', auth.protect, auth.editor, (req, res) => {
+router.put('/:id', protect, editor, (req, res) => {
   try {
     const { title, slug, content, seoTitle, seoDescription, active } = req.body
     const stmt = db.prepare(
@@ -64,7 +64,7 @@ router.put('/:id', auth.protect, auth.editor, (req, res) => {
 })
 
 // 删除页面
-router.delete('/:id', auth.protect, auth.editor, (req, res) => {
+router.delete('/:id', protect, editor, (req, res) => {
   try {
     db.prepare('DELETE FROM pages WHERE id = ?').run(req.params.id)
     res.json({ message: '页面已删除' })
