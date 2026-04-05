@@ -53,6 +53,21 @@ export default function Header() {
       }
     }
     fetchConfig()
+
+    // 监听配置更新事件
+    const handleConfigUpdate = () => {
+      console.log('站点配置已更新，重新加载...')
+      fetchConfig()
+    }
+    window.addEventListener('siteConfigUpdated', handleConfigUpdate)
+
+    // 每 30 秒自动刷新一次配置
+    const interval = setInterval(fetchConfig, 30000)
+
+    return () => {
+      window.removeEventListener('siteConfigUpdated', handleConfigUpdate)
+      clearInterval(interval)
+    }
   }, [])
 
   return (

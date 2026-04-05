@@ -137,6 +137,21 @@ function AppRoutes() {
       }
     }
     fetchConfig()
+
+    // 监听配置更新事件
+    const handleConfigUpdate = () => {
+      console.log('站点配置已更新，刷新 favicon 和 title...')
+      fetchConfig()
+    }
+    window.addEventListener('siteConfigUpdated', handleConfigUpdate)
+
+    // 每 30 秒自动刷新一次
+    const interval = setInterval(fetchConfig, 30000)
+
+    return () => {
+      window.removeEventListener('siteConfigUpdated', handleConfigUpdate)
+      clearInterval(interval)
+    }
   }, [])
 
   if (isAdmin) {

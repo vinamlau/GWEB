@@ -68,6 +68,8 @@ const Configs = () => {
       })
 
       if (response.ok) {
+        // 触发配置更新事件，通知前台刷新
+        window.dispatchEvent(new CustomEvent('siteConfigUpdated'))
         fetchConfigs()
         setEditing(null)
       } else {
@@ -248,29 +250,25 @@ const Configs = () => {
                 <div className="space-y-4">
                   {categoryConfigs.map(config => (
                     <div key={config._id} className="p-4 bg-gray-50 rounded-xl">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-semibold text-gray-900">
-                              {config.key}
-                            </span>
-                            {config.description && (
-                              <span className="text-xs text-gray-500">({config.description})</span>
-                            )}
-                          </div>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold text-gray-900">{config.key}</span>
+                          {config.description && (
+                            <span className="text-xs text-gray-500">({config.description})</span>
+                          )}
                         </div>
                         <div className="flex items-center gap-2">
                           {editing === config.key ? (
                             <>
                               <button
                                 onClick={() => handleUpdate(config.key)}
-                                className="text-sm text-green-600 hover:text-green-700 font-medium"
+                                className="text-sm bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg font-medium transition-colors"
                               >
                                 保存
                               </button>
                               <button
                                 onClick={() => setEditing(null)}
-                                className="text-sm text-gray-600 hover:text-gray-700 font-medium"
+                                className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-lg font-medium transition-colors"
                               >
                                 取消
                               </button>
@@ -282,7 +280,7 @@ const Configs = () => {
                                   setEditing(config.key)
                                   setEditValue(config.value)
                                 }}
-                                className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                                className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg font-medium transition-colors"
                               >
                                 编辑
                               </button>
@@ -307,15 +305,15 @@ const Configs = () => {
                                       }
                                     }}
                                     disabled={uploading === config.key}
-                                    className="text-sm text-purple-600 hover:text-purple-700 font-medium disabled:opacity-50"
+                                    className="text-sm bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                   >
-                                    {uploading === config.key ? '上传中...' : '上传'}
+                                    {uploading === config.key ? '📤 上传中...' : '📷 上传图片'}
                                   </button>
                                 </>
                               ) : (
                                 <button
                                   onClick={() => handleDelete(config.key)}
-                                  className="text-sm text-red-600 hover:text-red-700 font-medium"
+                                  className="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg font-medium transition-colors"
                                 >
                                   删除
                                 </button>
