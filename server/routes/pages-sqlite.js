@@ -34,15 +34,9 @@ router.get('/:slug', (req, res) => {
 router.post('/', protect, editor, (req, res) => {
   try {
     const { title, slug, content, seoTitle, seoDescription, active } = req.body
-    const result = db
-      .prepare(
-        `
-      INSERT INTO pages (title, slug, content, seo_title, seo_description, active)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `,
-      )
-      .run(title, slug, content, seoTitle, seoDescription, active ? 1 : 0)
-
+    const stmt = db.prepare('INSERT INTO pages (title, slug, content, seo_title, seo_description, active) VALUES (?, ?, ?, ?, ?, ?)')
+    const result = stmt.run(title, slug, content, seoTitle, seoDescription, active ? 1 : 0)
+    
     const page = db.prepare('SELECT * FROM pages WHERE id = ?').get(result.lastInsertRowid)
     res.status(201).json(page)
   } catch (error) {
@@ -55,14 +49,9 @@ router.post('/', protect, editor, (req, res) => {
 router.put('/:id', protect, editor, (req, res) => {
   try {
     const { title, slug, content, seoTitle, seoDescription, active } = req.body
-    db.prepare(
-      `
-      UPDATE pages 
-      SET title = ?, slug = ?, content = ?, seo_title = ?, seo_description = ?, active = ?, updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `,
-    ).run(title, slug, content, seoTitle, seoDescription, active ? 1 : 0, req.params.id)
-
+    const stmt = db.prepare('UPDATE pages SET title = ?, slug = ?, content = ?, seo_title = ?, seo_description = ?, active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+    stmt.run(title, slug, content, seoTitle, seoDescription, active ? 1 : 0, req.params.id)
+    
     const page = db.prepare('SELECT * FROM pages WHERE id = ?').get(req.params.id)
     res.json(page)
   } catch (error) {

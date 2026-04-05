@@ -19,9 +19,7 @@ router.get('/', (req, res) => {
 // 获取启用的页脚
 router.get('/active/:id', (req, res) => {
   try {
-    const footer = db
-      .prepare('SELECT * FROM footers WHERE id = ? AND active = 1')
-      .get(req.params.id)
+    const footer = db.prepare('SELECT * FROM footers WHERE id = ? AND active = 1').get(req.params.id)
     if (!footer) {
       return res.status(404).json({ error: '页脚配置不存在' })
     }
@@ -36,23 +34,9 @@ router.get('/active/:id', (req, res) => {
 router.post('/', protect, editor, (req, res) => {
   try {
     const { companyName, description, address, phone, email, icpLicense, socialLinks } = req.body
-    const result = db
-      .prepare(
-        `
-      INSERT INTO footers (company_name, description, address, phone, email, icp_license, social_links)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `,
-      )
-      .run(
-        companyName,
-        description,
-        address,
-        phone,
-        email,
-        icpLicense,
-        JSON.stringify(socialLinks || {}),
-      )
-
+    const stmt = db.prepare('INSERT INTO footers (company_name, description, address, phone, email, icp_license, social_links) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    const result = stmt.run(companyName, description, address, phone, email, icpLicense, JSON.stringify(socialLinks || {}))
+    
     const footer = db.prepare('SELECT * FROM footers WHERE id = ?').get(result.lastInsertRowid)
     res.status(201).json(footer)
   } catch (error) {
@@ -64,26 +48,10 @@ router.post('/', protect, editor, (req, res) => {
 // 更新页脚配置
 router.put('/:id', protect, editor, (req, res) => {
   try {
-    const { companyName, description, address, phone, email, icpLicense, socialLinks, active } =
-      req.body
-    db.prepare(
-      `
-      UPDATE footers 
-      SET company_name = ?, description = ?, address = ?, phone = ?, email = ?, icp_license = ?, social_links = ?, active = ?
-      WHERE id = ?
-    `,
-    ).run(
-      companyName,
-      description,
-      address,
-      phone,
-      email,
-      icpLicense,
-      JSON.stringify(socialLinks || {}),
-      active ? 1 : 0,
-      req.params.id,
-    )
-
+    const { companyName, description, address, phone, email, icpLicense, socialLinks, active } = req.body
+    const stmt = db.prepare('UPDATE footers SET company_name = ?, description = ?, address = ?, phone = ?, email = ?, icp_license = ?, social_links = ?, active = ? WHERE id = ?')
+    stmt.run(companyName, description, address, phone, email, icpLicense, JSON.stringify(socialLinks || {}), active ? 1 : 0, req.params.id)
+    
     const footer = db.prepare('SELECT * FROM footers WHERE id = ?').get(req.params.id)
     res.json(footer)
   } catch (error) {
