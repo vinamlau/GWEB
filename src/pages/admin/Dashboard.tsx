@@ -15,6 +15,7 @@ import {
 } from 'recharts'
 
 import AdminLayout from '../../components/admin/AdminLayout'
+import { API_URL } from '../../config/api'
 
 interface Stats {
   articles: number
@@ -50,7 +51,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       const token = localStorage.getItem('token')
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
       try {
         const headers = {
