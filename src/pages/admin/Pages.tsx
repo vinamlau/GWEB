@@ -55,6 +55,13 @@ const Pages = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!token) {
+      alert('未授权，请重新登录')
+      window.location.href = '/admin/login'
+      return
+    }
+
     try {
       const url = editingPage ? `${API_URL}/api/pages/${editingPage.id}` : `${API_URL}/api/pages`
       const method = editingPage ? 'PUT' : 'POST'
@@ -70,6 +77,12 @@ const Pages = () => {
 
       if (!response.ok) {
         const errorData = await response.json()
+        if (response.status === 401) {
+          alert('登录已过期，请重新登录')
+          localStorage.removeItem('token')
+          window.location.href = '/admin/login'
+          return
+        }
         alert(errorData.error || '保存失败')
         return
       }
