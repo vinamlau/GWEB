@@ -38,7 +38,9 @@ export default function News() {
     const fetchArticles = async () => {
       try {
         // 获取公司新闻
-        const companyRes = await fetch(`${API_URL}/api/articles?category=公司新闻&status=published`)
+        const companyRes = await fetch(
+          `${API_URL}/api/articles?category=${encodeURIComponent('公司新闻')}&status=published`,
+        )
         if (companyRes.ok) {
           const data = await companyRes.json()
           setCompanyNews(data.articles || data)
@@ -46,7 +48,7 @@ export default function News() {
 
         // 获取行业资讯
         const industryRes = await fetch(
-          `${API_URL}/api/articles?category=行业资讯&status=published`,
+          `${API_URL}/api/articles?category=${encodeURIComponent('行业资讯')}&status=published`,
         )
         if (industryRes.ok) {
           const data = await industryRes.json()
