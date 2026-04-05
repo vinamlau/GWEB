@@ -11,10 +11,12 @@ import Banners from './pages/admin/Banners'
 import Comments from './pages/admin/Comments'
 import Configs from './pages/admin/Configs'
 import AdminDashboard from './pages/admin/Dashboard'
+import Footer from './pages/admin/Footer'
 import Images from './pages/admin/Images'
 // Admin pages
 import AdminLogin from './pages/admin/Login'
 import Menus from './pages/admin/Menus'
+import Pages from './pages/admin/Pages'
 import ShopOrders from './pages/admin/ShopOrders'
 import ShopProductsAdmin from './pages/admin/ShopProducts'
 import Users from './pages/admin/Users'
@@ -86,6 +88,8 @@ function AdminRoutes() {
     <Routes>
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/pages" element={<Pages />} />
+      <Route path="/admin/footer" element={<Footer />} />
       <Route path="/admin/articles" element={<Articles />} />
       <Route path="/admin/articles/new" element={<ArticleEditor />} />
       <Route path="/admin/articles/edit/:id" element={<ArticleEditor />} />
