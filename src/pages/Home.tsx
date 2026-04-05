@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import { ChevronRight, CreditCard, Globe, Server, ShoppingCart, Zap } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Button from '../components/Button'
 import Container from '../components/Container'
 import Section from '../components/Section'
+import { API_URL } from '../config/api'
 
 const services = [
   {
@@ -44,7 +46,49 @@ const stats = [
   { value: '99.99%', label: '服务可用性', growth: '持平' },
 ]
 
+interface HomePage {
+  id?: number
+  title?: string
+  slug?: string
+  content?: string
+}
+
 export default function Home() {
+  const [homePage, setHomePage] = useState<HomePage | null>(null)
+
+  useEffect(() => {
+    const fetchHomePage = async () => {
+      const response = await fetch(`${API_URL}/api/pages/home`)
+      if (response.ok) {
+        const data = await response.json()
+        setHomePage(data)
+      }
+    }
+    fetchHomePage()
+
+    const handlePageUpdate = () => {
+      fetchHomePage()
+    }
+    window.addEventListener('pageUpdated', handlePageUpdate)
+    return () => {
+      window.removeEventListener('pageUpdated', handlePageUpdate)
+    }
+  }, [])
+
+  // 如果后台编辑了首页内容，则显示后台内容；否则显示默认内容
+  const showCustomContent = homePage && homePage.content && homePage.content.length > 0
+
+  // 如果后台有自定义内容，显示自定义内容
+  if (showCustomContent) {
+    return (
+      <div
+        className="home-page-container"
+        dangerouslySetInnerHTML={{ __html: homePage.content || '' }}
+      />
+    )
+  }
+
+  // 否则显示默认设计内容
   return (
     <div className="flex flex-col bg-white">
       {/* Hero Section - Apple Style */}
