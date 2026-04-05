@@ -147,6 +147,38 @@ const initializeDB = () => {
     )
   `)
 
+  // 单页内容表（首页、关于我们、联系我们等）
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS pages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      slug TEXT UNIQUE NOT NULL,
+      content TEXT NOT NULL,
+      seoTitle TEXT,
+      seoDescription TEXT,
+      active INTEGER DEFAULT 1,
+      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
+
+  // 页脚配置表
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS footers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      company_name TEXT,
+      description TEXT,
+      address TEXT,
+      phone TEXT,
+      email TEXT,
+      icp_license TEXT,
+      social_links TEXT DEFAULT '{}',
+      active INTEGER DEFAULT 1,
+      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
+
   // 购物车表
   db.exec(`
     CREATE TABLE IF NOT EXISTS shop_cart (

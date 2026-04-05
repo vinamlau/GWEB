@@ -20,6 +20,8 @@ const bannerRoutes = require('./routes/banners-sqlite')
 const shopRoutes = require('./routes/shop-sqlite')
 const orderRoutes = require('./routes/orders-sqlite')
 const paymentRoutes = require('./routes/payment-sqlite')
+const pageRoutes = require('./routes/pages-sqlite')
+const footerRoutes = require('./routes/footer-sqlite')
 
 const app = express()
 
@@ -43,6 +45,8 @@ app.use('/api/banners', bannerRoutes)
 app.use('/api/shop', shopRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/payment', paymentRoutes)
+app.use('/api/pages', pageRoutes)
+app.use('/api/footer', footerRoutes)
 
 app.get('/api/health', (req, res) => {
   res.json({
