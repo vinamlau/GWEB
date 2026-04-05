@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
 import Button from '../../components/Button'
-
-const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:3001'
+import { API_URL } from '../../config/api'
 
 interface OrderItem {
   productId: number
@@ -40,12 +39,14 @@ const ShopOrders = () => {
         ? `${API_URL}/api/orders/admin/orders?status=${statusFilter}`
         : `${API_URL}/api/orders/admin/orders`
       const response = await fetch(url)
-      const data = await response.json()
-      if (data.success) {
-        setOrders(data.data)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
+      const data = await response.json()
+      setOrders(data.data || [])
     } catch (error) {
       console.error('获取订单列表失败:', error)
+      setOrders([])
     } finally {
       setLoading(false)
     }
@@ -72,11 +73,13 @@ const ShopOrders = () => {
         body: JSON.stringify({ trackingNo, carrier }),
       })
 
-      const data = await response.json()
-      if (data.success) {
-        alert('订单已发货')
-        fetchOrders()
+      if (!response.ok) {
+        const errorData = await response.json()
+        alert(errorData.error || '发货失败')
+        return
       }
+      alert('订单已发货')
+      fetchOrders()
     } catch (error) {
       console.error('订单发货失败:', error)
       alert('发货失败')

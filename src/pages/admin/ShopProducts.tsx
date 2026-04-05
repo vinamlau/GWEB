@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
 import Button from '../../components/Button'
-
-const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:3001'
+import { API_URL } from '../../config/api'
 
 interface Product {
   id: number
@@ -44,12 +43,14 @@ const ShopProducts = () => {
   const fetchProducts = async () => {
     try {
       const response = await fetch(`${API_URL}/api/shop/admin/products`)
-      const data = await response.json()
-      if (data.success) {
-        setProducts(data.data)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
+      const data = await response.json()
+      setProducts(data.data || [])
     } catch (error) {
       console.error('获取商品列表失败:', error)
+      setProducts([])
     } finally {
       setLoading(false)
     }

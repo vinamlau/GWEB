@@ -32,10 +32,14 @@ const Comments = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
       const data = await res.json()
       setComments(data.comments || data || [])
     } catch (error) {
       console.error('获取评论列表失败:', error)
+      setComments([])
     } finally {
       setLoading(false)
     }
@@ -45,7 +49,7 @@ const Comments = () => {
     const token = localStorage.getItem('token')
 
     try {
-      await fetch(`${API_URL}/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/api/comments/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -53,9 +57,15 @@ const Comments = () => {
         },
         body: JSON.stringify({ status }),
       })
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '更新失败')
+        return
+      }
       fetchComments()
     } catch (error) {
       console.error('更新评论状态失败:', error)
+      alert('更新失败，请重试')
     }
   }
 
@@ -67,15 +77,21 @@ const Comments = () => {
     const token = localStorage.getItem('token')
 
     try {
-      await fetch(`${API_URL}/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/api/comments/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '删除失败')
+        return
+      }
       fetchComments()
     } catch (error) {
       console.error('删除评论失败:', error)
+      alert('删除失败，请重试')
     }
   }
 

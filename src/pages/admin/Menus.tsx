@@ -39,10 +39,14 @@ const Menus = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
       const data = await res.json()
       setMenus(data.menus || data || [])
     } catch (error) {
       console.error('获取菜单列表失败:', error)
+      setMenus([])
     } finally {
       setLoading(false)
     }
@@ -56,15 +60,21 @@ const Menus = () => {
     const token = localStorage.getItem('token')
 
     try {
-      await fetch(`${API_URL}/api/menus/${id}`, {
+      const res = await fetch(`${API_URL}/api/menus/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '删除失败')
+        return
+      }
       fetchMenus()
     } catch (error) {
       console.error('删除菜单失败:', error)
+      alert('删除失败，请重试')
     }
   }
 
@@ -76,7 +86,7 @@ const Menus = () => {
       const url = editingMenu ? `${API_URL}/api/menus/${editingMenu.id}` : `${API_URL}/api/menus`
       const method = editingMenu ? 'PUT' : 'POST'
 
-      await fetch(url, {
+      const res = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
@@ -85,12 +95,19 @@ const Menus = () => {
         body: JSON.stringify(formData),
       })
 
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '保存失败')
+        return
+      }
+
       setShowModal(false)
       setEditingMenu(null)
       setFormData({ title: '', url: '', parentId: 0, order: 0, active: true })
       fetchMenus()
     } catch (error) {
       console.error('保存菜单失败:', error)
+      alert('保存失败，请重试')
     }
   }
 

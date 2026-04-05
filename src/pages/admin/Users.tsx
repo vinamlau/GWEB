@@ -37,10 +37,14 @@ const Users = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
       const data = await res.json()
       setUsers(data.users || data || [])
     } catch (error) {
       console.error('获取用户列表失败:', error)
+      setUsers([])
     } finally {
       setLoading(false)
     }
@@ -54,15 +58,21 @@ const Users = () => {
     const token = localStorage.getItem('token')
 
     try {
-      await fetch(`${API_URL}/api/users/${id}`, {
+      const res = await fetch(`${API_URL}/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '删除失败')
+        return
+      }
       fetchUsers()
     } catch (error) {
       console.error('删除用户失败:', error)
+      alert('删除失败，请重试')
     }
   }
 
@@ -74,7 +84,7 @@ const Users = () => {
       const url = editingUser ? `${API_URL}/api/users/${editingUser.id}` : `${API_URL}/api/users`
       const method = editingUser ? 'PUT' : 'POST'
 
-      await fetch(url, {
+      const res = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
@@ -83,12 +93,19 @@ const Users = () => {
         body: JSON.stringify(formData),
       })
 
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '保存失败')
+        return
+      }
+
       setShowModal(false)
       setEditingUser(null)
       setFormData({ username: '', email: '', password: '', role: 'editor' })
       fetchUsers()
     } catch (error) {
       console.error('保存用户失败:', error)
+      alert('保存失败，请重试')
     }
   }
 

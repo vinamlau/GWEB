@@ -41,10 +41,14 @@ const Banners = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
       const data = await res.json()
       setBanners(data.banners || data || [])
     } catch (error) {
       console.error('获取广告列表失败:', error)
+      setBanners([])
     } finally {
       setLoading(false)
     }
@@ -58,15 +62,21 @@ const Banners = () => {
     const token = localStorage.getItem('token')
 
     try {
-      await fetch(`${API_URL}/api/banners/${id}`, {
+      const res = await fetch(`${API_URL}/api/banners/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '删除失败')
+        return
+      }
       fetchBanners()
     } catch (error) {
       console.error('删除广告失败:', error)
+      alert('删除失败，请重试')
     }
   }
 
@@ -80,7 +90,7 @@ const Banners = () => {
         : `${API_URL}/api/banners`
       const method = editingBanner ? 'PUT' : 'POST'
 
-      await fetch(url, {
+      const res = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
@@ -88,6 +98,12 @@ const Banners = () => {
         },
         body: JSON.stringify(formData),
       })
+
+      if (!res.ok) {
+        const errorData = await res.json()
+        alert(errorData.error || '保存失败')
+        return
+      }
 
       setShowModal(false)
       setEditingBanner(null)
@@ -102,6 +118,7 @@ const Banners = () => {
       fetchBanners()
     } catch (error) {
       console.error('保存广告失败:', error)
+      alert('保存失败，请重试')
     }
   }
 

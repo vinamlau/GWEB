@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
 import Button from '../../components/Button'
@@ -25,6 +25,9 @@ const Configs = () => {
     category: 'basic',
     description: '',
   })
+  const [uploading, setUploading] = useState<string | null>(null)
+  const logoInputRef = useRef<HTMLInputElement>(null)
+  const faviconInputRef = useRef<HTMLInputElement>(null)
 
   const token = localStorage.getItem('token')
 
@@ -35,10 +38,14 @@ const Configs = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
       setConfigs(data)
     } catch (error) {
       console.error('获取配置失败:', error)
+      setConfigs([])
     } finally {
       setLoading(false)
     }
@@ -69,6 +76,7 @@ const Configs = () => {
       }
     } catch (error) {
       console.error('更新失败:', error)
+      alert('更新失败，请重试')
     }
   }
 
@@ -98,6 +106,7 @@ const Configs = () => {
       }
     } catch (error) {
       console.error('添加失败:', error)
+      alert('添加失败，请重试')
     }
   }
 
@@ -116,9 +125,63 @@ const Configs = () => {
 
       if (response.ok) {
         fetchConfigs()
+      } else {
+        const data = await response.json()
+        alert(data.message || '删除失败')
       }
     } catch (error) {
       console.error('删除失败:', error)
+      alert('删除失败，请重试')
+    }
+  }
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>, configKey: string) => {
+    const file = e.target.files?.[0]
+    if (!file) {
+      return
+    }
+
+    setUploading(configKey)
+    const formData = new FormData()
+    formData.append('image', file)
+    formData.append('category', 'logo')
+
+    try {
+      const response = await fetch(`${API_URL}/api/images/upload`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      })
+
+      if (response.ok) {
+        const imageData = await response.json()
+        const imageUrl = imageData.url
+        await fetch(`${API_URL}/api/config/${configKey}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ value: imageUrl }),
+        })
+        fetchConfigs()
+      } else {
+        const data = await response.json()
+        alert(data.message || '上传失败')
+      }
+    } catch (error) {
+      console.error('上传失败:', error)
+      alert('上传失败，请重试')
+    } finally {
+      setUploading(null)
+      if (logoInputRef.current) {
+        logoInputRef.current.value = ''
+      }
+      if (faviconInputRef.current) {
+        faviconInputRef.current.value = ''
+      }
     }
   }
 
@@ -223,12 +286,40 @@ const Configs = () => {
                               >
                                 编辑
                               </button>
-                              <button
-                                onClick={() => handleDelete(config.key)}
-                                className="text-sm text-red-600 hover:text-red-700 font-medium"
-                              >
-                                删除
-                              </button>
+                              {config.key === 'logo' || config.key === 'favicon' ? (
+                                <>
+                                  <input
+                                    ref={config.key === 'logo' ? logoInputRef : faviconInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={e => handleLogoUpload(e, config.key)}
+                                    className="hidden"
+                                  />
+                                  <button
+                                    onClick={() => {
+                                      if (config.key === 'logo' && logoInputRef.current) {
+                                        logoInputRef.current.click()
+                                      } else if (
+                                        config.key === 'favicon' &&
+                                        faviconInputRef.current
+                                      ) {
+                                        faviconInputRef.current.click()
+                                      }
+                                    }}
+                                    disabled={uploading === config.key}
+                                    className="text-sm text-purple-600 hover:text-purple-700 font-medium disabled:opacity-50"
+                                  >
+                                    {uploading === config.key ? '上传中...' : '上传'}
+                                  </button>
+                                </>
+                              ) : (
+                                <button
+                                  onClick={() => handleDelete(config.key)}
+                                  className="text-sm text-red-600 hover:text-red-700 font-medium"
+                                >
+                                  删除
+                                </button>
+                              )}
                             </>
                           )}
                         </div>
@@ -241,6 +332,17 @@ const Configs = () => {
                           className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
                           autoFocus
                         />
+                      ) : config.key === 'logo' || config.key === 'favicon' ? (
+                        <div className="flex items-center gap-3">
+                          {config.value && (
+                            <img
+                              src={`${API_URL}${config.value}`}
+                              alt={config.key}
+                              className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                            />
+                          )}
+                          <p className="text-gray-700 text-sm break-all">{config.value}</p>
+                        </div>
                       ) : (
                         <p className="text-gray-700 text-sm break-all">{config.value}</p>
                       )}

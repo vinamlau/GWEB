@@ -39,12 +39,18 @@ const Articles = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
-      setArticles(data.articles)
-      setTotalPages(data.pages)
-      setTotal(data.total)
+      setArticles(data.articles || [])
+      setTotalPages(data.pages || 1)
+      setTotal(data.total || 0)
     } catch (error) {
       console.error('获取文章列表失败:', error)
+      setArticles([])
+      setTotalPages(1)
+      setTotal(0)
     } finally {
       setLoading(false)
     }
@@ -68,11 +74,15 @@ const Articles = () => {
         },
       })
 
-      if (response.ok) {
-        fetchArticles()
+      if (!response.ok) {
+        const errorData = await response.json()
+        alert(errorData.error || '删除失败')
+        return
       }
+      fetchArticles()
     } catch (error) {
       console.error('删除失败:', error)
+      alert('删除失败，请重试')
     }
   }
 

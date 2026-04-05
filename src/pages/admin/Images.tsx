@@ -33,11 +33,16 @@ const Images = () => {
     try {
       const params = new URLSearchParams({ page: page.toString(), ...filter })
       const response = await fetch(`${API_URL}/api/images?${params}`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
-      setImages(data.images)
-      setTotalPages(data.pages)
+      setImages(data.images || [])
+      setTotalPages(data.pages || 1)
     } catch (error) {
       console.error('获取图片失败:', error)
+      setImages([])
+      setTotalPages(1)
     } finally {
       setLoading(false)
     }
@@ -98,11 +103,15 @@ const Images = () => {
         },
       })
 
-      if (response.ok) {
-        fetchImages()
+      if (!response.ok) {
+        const errorData = await response.json()
+        alert(errorData.message || '删除失败')
+        return
       }
+      fetchImages()
     } catch (error) {
       console.error('删除失败:', error)
+      alert('删除失败，请重试')
     }
   }
 
