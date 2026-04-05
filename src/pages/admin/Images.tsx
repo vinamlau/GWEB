@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 interface Image {
   _id: string
@@ -26,7 +27,6 @@ const Images = () => {
   const [filter, setFilter] = useState({ category: '' })
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
   const token = localStorage.getItem('token')
 
   const fetchImages = async () => {

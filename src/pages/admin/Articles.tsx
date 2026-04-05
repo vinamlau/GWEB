@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import AdminLayout from '../../components/admin/AdminLayout'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 interface Article {
   _id: string
@@ -28,7 +29,6 @@ const Articles = () => {
     status: '',
   })
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
   const token = localStorage.getItem('token')
 
   const fetchArticles = async () => {

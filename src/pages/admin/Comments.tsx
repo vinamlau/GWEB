@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
+import { API_URL } from '../../config/api'
 
 interface Comment {
   id: number
@@ -24,7 +25,6 @@ const Comments = () => {
 
   const fetchComments = async () => {
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const res = await fetch(`${API_URL}/api/comments`, {
@@ -43,7 +43,6 @@ const Comments = () => {
 
   const handleStatusChange = async (id: number, status: string) => {
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       await fetch(`${API_URL}/api/comments/${id}`, {
@@ -66,7 +65,6 @@ const Comments = () => {
     }
 
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       await fetch(`${API_URL}/api/comments/${id}`, {

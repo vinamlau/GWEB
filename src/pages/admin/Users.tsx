@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
+import { API_URL } from '../../config/api'
 
 interface User {
   id: number
@@ -29,7 +30,6 @@ const Users = () => {
 
   const fetchUsers = async () => {
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const res = await fetch(`${API_URL}/api/users`, {
@@ -52,7 +52,6 @@ const Users = () => {
     }
 
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       await fetch(`${API_URL}/api/users/${id}`, {
@@ -70,7 +69,6 @@ const Users = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const url = editingUser ? `${API_URL}/api/users/${editingUser.id}` : `${API_URL}/api/users`

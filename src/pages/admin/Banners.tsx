@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
+import { API_URL } from '../../config/api'
 
 interface Banner {
   id: number
@@ -33,7 +34,6 @@ const Banners = () => {
 
   const fetchBanners = async () => {
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const res = await fetch(`${API_URL}/api/banners`, {
@@ -56,7 +56,6 @@ const Banners = () => {
     }
 
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       await fetch(`${API_URL}/api/banners/${id}`, {
@@ -74,7 +73,6 @@ const Banners = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const url = editingBanner

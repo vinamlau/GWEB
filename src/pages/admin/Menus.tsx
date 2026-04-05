@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 import AdminLayout from '../../components/admin/AdminLayout'
+import { API_URL } from '../../config/api'
 
 interface Menu {
   id: number
@@ -31,7 +32,6 @@ const Menus = () => {
 
   const fetchMenus = async () => {
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const res = await fetch(`${API_URL}/api/menus`, {
@@ -54,7 +54,6 @@ const Menus = () => {
     }
 
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       await fetch(`${API_URL}/api/menus/${id}`, {
@@ -72,7 +71,6 @@ const Menus = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const token = localStorage.getItem('token')
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
     try {
       const url = editingMenu ? `${API_URL}/api/menus/${editingMenu.id}` : `${API_URL}/api/menus`

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import AdminLayout from '../../components/admin/AdminLayout'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 const ArticleEditor = () => {
   const navigate = useNavigate()
@@ -21,7 +22,6 @@ const ArticleEditor = () => {
     isTop: false,
   })
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
   const token = localStorage.getItem('token')
 
   useEffect(() => {
