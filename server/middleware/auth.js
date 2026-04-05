@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const db = require('../config/db-sqlite')
+const { db } = require('../config/db-sqlite')
 
 const protect = async (req, res, next) => {
   let token
