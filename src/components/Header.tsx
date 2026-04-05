@@ -1,9 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+import { API_URL } from '../config/api'
 import Button from './Button'
+
+interface SiteConfig {
+  key: string
+  value: string
+}
 
 const navItems = [
   { name: '首页', path: '/' },
@@ -25,9 +31,29 @@ const navItems = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [siteConfig, setSiteConfig] = useState<Record<string, string>>({})
   const location = useLocation()
 
   const isActive = (path: string) => location.pathname === path
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/config`)
+        if (response.ok) {
+          const data = await response.json()
+          const configMap = data.reduce((acc: Record<string, string>, item: SiteConfig) => {
+            acc[item.key] = item.value
+            return acc
+          }, {})
+          setSiteConfig(configMap)
+        }
+      } catch (error) {
+        console.error('获取站点配置失败:', error)
+      }
+    }
+    fetchConfig()
+  }, [])
 
   return (
     <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
@@ -36,10 +62,20 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-gray-900 rounded-none flex items-center justify-center">
-                <span className="text-white font-bold text-xl">G</span>
-              </div>
-              <span className="ml-3 text-xl font-bold text-gray-900 tracking-tight">集团公司</span>
+              {siteConfig.logo ? (
+                <img
+                  src={`${API_URL}${siteConfig.logo}`}
+                  alt="Logo"
+                  className="w-10 h-10 object-contain"
+                />
+              ) : (
+                <div className="w-10 h-10 bg-gray-900 rounded-none flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">G</span>
+                </div>
+              )}
+              <span className="ml-3 text-xl font-bold text-gray-900 tracking-tight">
+                {siteConfig.siteName || '集团公司'}
+              </span>
             </div>
           </Link>
 

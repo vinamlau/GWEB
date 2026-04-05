@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 
 import ComputeNodeMap from './components/ComputeNodeMap'
 import Layout from './components/Layout'
+import { API_URL } from './config/api'
 import About from './pages/About'
 import ArticleEditor from './pages/admin/ArticleEditor'
 import Articles from './pages/admin/Articles'
@@ -104,6 +106,38 @@ function AppRoutes() {
   const location = useLocation()
   const isAdmin = isAdminRoute(location.pathname)
   const isShop = location.pathname.startsWith('/shop')
+
+  // 获取站点配置并更新 favicon 和 title
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/config`)
+        if (response.ok) {
+          const data = await response.json()
+          const configMap = data.reduce((acc: Record<string, string>, item: any) => {
+            acc[item.key] = item.value
+            return acc
+          }, {})
+
+          // 更新 favicon
+          if (configMap.favicon) {
+            const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+            if (faviconLink) {
+              faviconLink.href = `${API_URL}${configMap.favicon}`
+            }
+          }
+
+          // 更新 title
+          if (configMap.siteName) {
+            document.title = `${configMap.siteName} | 边缘算力 · 支付金融 · 电商业务`
+          }
+        }
+      } catch (error) {
+        console.error('获取站点配置失败:', error)
+      }
+    }
+    fetchConfig()
+  }, [])
 
   if (isAdmin) {
     return <AdminRoutes />
