@@ -1,7 +1,6 @@
 const express = require('express')
 const { db } = require('../config/db-sqlite')
-const protect = require('../middleware/auth')
-const editor = require('../middleware/auth').editor
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -31,7 +30,7 @@ router.get('/active/:id', (req, res) => {
 })
 
 // 创建页脚配置
-router.post('/', protect, editor, (req, res) => {
+router.post('/', auth.protect, auth.editor, (req, res) => {
   try {
     const { companyName, description, address, phone, email, icpLicense, socialLinks } = req.body
     const stmt = db.prepare('INSERT INTO footers (company_name, description, address, phone, email, icp_license, social_links) VALUES (?, ?, ?, ?, ?, ?, ?)')
@@ -46,7 +45,7 @@ router.post('/', protect, editor, (req, res) => {
 })
 
 // 更新页脚配置
-router.put('/:id', protect, editor, (req, res) => {
+router.put('/:id', auth.protect, auth.editor, (req, res) => {
   try {
     const { companyName, description, address, phone, email, icpLicense, socialLinks, active } = req.body
     const stmt = db.prepare('UPDATE footers SET company_name = ?, description = ?, address = ?, phone = ?, email = ?, icp_license = ?, social_links = ?, active = ? WHERE id = ?')
