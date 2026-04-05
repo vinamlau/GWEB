@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../config/db-sqlite')
+const { db } = require('../config/db-sqlite')
 
 // 获取商品列表
 router.get('/products', (req, res) => {

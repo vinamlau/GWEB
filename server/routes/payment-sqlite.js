@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../config/db-sqlite')
+const { db } = require('../config/db-sqlite')
 
 // 创建支付订单
 router.post('/create', (req, res) => {

@@ -1,5 +1,5 @@
 const express = require('express')
-const db = require('../config/db-sqlite')
+const { db } = require('../config/db-sqlite')
 
 const router = express.Router()
 
